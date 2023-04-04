@@ -191,6 +191,31 @@ class Klant {
         }
 
     }
+    public function searchKlantId($klantId) {
+        require 'database.php';
+        $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
+        $sql->bindParam(':klantId', $klantId);
+        $sql->execute();
+    
+        $klant = $sql->fetch();
+        if ($klant) {
+            $result = array();
+            $result['klantNaam'] = $klant['klantNaam'];
+            $result['klantEmail'] = $klant['klantEmail'];
+            $result['klantAdres'] = $klant['klantAdres'];
+            $result['klantPostcode'] = $klant['klantPostcode'];
+            $result['klantWoonplaats'] = $klant['klantWoonplaats'];
+            $_SESSION['result'] = $result;
+            header("Location: klantRead.php");
+            exit;
+
+        } else {
+            header("Location: klantRead.php");
+            $_SESSION['searchMsg'] = "No result found for this Postcode.";
+
+        }
+
+    }
 
     public function updateKlant($klantId, $klantNaam, $klantEmail, $klantAdres, $klantPostcode, $klantWoonplaats) {
         require 'database.php';

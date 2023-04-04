@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Klant Create</title>
+    <title>Klant Read</title>
 </head>
 <body>
     <?php require 'nav.php'?>
@@ -15,10 +15,16 @@
             <div class="basCard">
                 <div class="CardContent">
                     <h1>Read Klant</h1>
-                    <p>Zoek klant op Postcode:</p>
+                    <p>Zoek klant op ID of Postcode:</p>
                     <form action="klantSearch.php" method='POST'>
                         <label for="klantPostcode">Postcode:</label>
                         <input type="text" id ='klantPostcode' name='klantPostcode'>
+                        <input type="submit">
+
+                    </form>
+                    <form action="klantSearchId.php" method='POST'>
+                        <label for="klantId">ID:</label>
+                        <input type="text" id ='klantId' name='klantId'>
                         <input type="submit">
 
                     </form>

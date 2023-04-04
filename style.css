@@ -255,39 +255,12 @@ h1 {
 
 /* nav */
 @media (max-width: 425px) {
-    nav {
-    height: auto;
-    position: static;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px 0;
+    .navLink {
+        font-size: small;
+        font-weight: lighter;
     }
-    .logo {
-        margin: 0;
-        margin-bottom: 10px;
-        }
-        
-        .bas {
-        font-size: 36px;
-        }
-        
-        .navLogin {
-        display: none;
-        }
-        
-        .navContainer {
-        flex-direction: column;
-        margin: 0;
-        padding: 0;
-        }
-        
-        .navLink, .footerLink, .navLinkLogin {
-        display: block;
-        margin: 5px 0;
-        padding: 10px;
-        text-align: center;
-        }
-        }
+
+}
 
 nav {
     margin: 0;
