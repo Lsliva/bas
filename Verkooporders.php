@@ -1,3 +1,4 @@
+
 <?php
 class Verkooporders {
     //properties
@@ -52,7 +53,7 @@ class Verkooporders {
 
 
     //CRUD functions
-    public function createVerkooporder() {
+    public function createVerkooporders() {
         require 'database.php';
         $klantId = $this->get_klantId();
         $artId = $this->get_artId();
@@ -80,14 +81,14 @@ class Verkooporders {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM verkooporders');
         $sql->execute();
-    
+
         foreach($sql as $order) {
             $orderObject = new Verkooporders($order['klantId'], $order['artId'], $order['verkOrdDatum'], $order['verkOrdBestAantal'], $order['verkOrdStatus']);
             echo '<br>';
             echo '<div class="readList">';
-            echo '<a href="orderDelete.php?action=delete&orderId=' . $order['orderId'] . '" class="deleteButton" onclick="return confirm("Are you sure you want to delete this order?")">Delete</a>';
-            echo '<a href="orderUpdateForm.php?action=update&orderId=' . $order['orderId'] . '"class="updateButton">Update</a>';
-    
+            echo '<a href="verkooporderDelete.php?action=delete&verkOrdId=' . $order['verkOrdId'] . '" class="deleteButton" onclick="return confirm("Are you sure you want to delete this order?")">Delete</a>';
+            echo '<a href="verkoopordersUpdateForm.php?action=update&verkOrdId=' . $order['verkOrdId'] . '"class="updateButton">Update</a>';
+
             echo $orderObject->klantId . ' - ';
             echo $orderObject->artId . ' - ';
             echo $orderObject->verkOrdDatum . ' - ';
@@ -97,31 +98,31 @@ class Verkooporders {
             echo '<br>';
         }
     }
-    public function deleteVerkooporder($orderId) {
+    public function deleteVerkooporder($verkOrdId) {
         require 'database.php';
-        $sql = $conn->prepare('DELETE FROM verkooporders WHERE orderId = :orderId');
-        $sql->bindParam(':orderId', $orderId);
+        $sql = $conn->prepare('DELETE FROM verkooporders WHERE verkOrdId = :verkOrdId');
+        $sql->bindParam(':verkOrdId', $verkOrdId);
         $sql->execute();
-    
+
         //melding
-        $_SESSION['message'] = 'Order ' . $orderId . ' is verwijderd. <br>';
-        header("Location: orderRead.php");
+        $_SESSION['message'] = 'Order ' . $verkOrdId . ' is verwijderd. <br>';
+        header("Location: verkooporderRead.php");
     }
-    public function findVerkooporder($orderId) {
+    public function findVerkooporder($verkOrdId) {
         require 'pureConnect.php';
-        $sql = $conn->prepare('SELECT * FROM verkooporders WHERE orderId = :orderId');
-        $sql->bindParam(':orderId', $orderId);
+        $sql = $conn->prepare('SELECT * FROM verkooporders WHERE verkOrdId = :verkOrdId');
+        $sql->bindParam(':verkOrdId', $verkOrdId);
         $sql->execute();
-    
+
         $order = $sql->fetch();
         return $order;
     }
-    public function searchKlant($klantPostcode) {
+    public function searchVerkooporder($verkOrdId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM verkooporders WHERE klantPostcode = :klantPostcode');
         $sql->bindParam(':klantPostcode', $klantPostcode);
         $sql->execute();
-    
+
         $verkooporder = $sql->fetch();
         if ($verkooporder) {
             $result = array();
@@ -131,17 +132,17 @@ class Verkooporders {
             $result['klantPostcode'] = $verkooporder['klantPostcode'];
             $result['klantWoonplaats'] = $verkooporder['klantWoonplaats'];
             $_SESSION['result'] = $result;
-            header("Location: klantRead.php");
+            header("Location: verkooporderRead.php");
             exit;
-    
+
         } else {
-            header("Location: klantRead.php");
+            header("Location: verkooporderRead.php");
             $_SESSION['searchMsg'] = "No result found for this Postcode.";
-    
+
         }
     }
-    
-    public function updateKlant($verkOrdId, $klantId, $artId, $verkOrdDatum, $verkOrdBestAantal, $verkOrdStatus) {
+
+    public function updateVerkooporder($verkOrdId, $klantId, $artId, $verkOrdDatum, $verkOrdBestAantal, $verkOrdStatus) {
         require 'database.php';
         $sql = $conn->prepare('UPDATE verkooporders SET klantId = :klantId, artId = :artId, verkOrdDatum = :verkOrdDatum, verkOrdBestAantal = :verkOrdBestAantal, verkOrdStatus = :verkOrdStatus WHERE verkOrdId = :verkOrdId');
         $sql->bindParam(':verkOrdId', $verkOrdId);
@@ -150,12 +151,13 @@ class Verkooporders {
         $sql->bindParam(':verkOrdDatum', $verkOrdDatum);
         $sql->bindParam(':verkOrdBestAantal', $verkOrdBestAantal);
         $sql->bindParam(':verkOrdStatus', $verkOrdStatus);
-    
+
         $sql->execute();
-    
+
         $_SESSION['message'] = 'Verkooporder ' . $verkOrdId . ' is bijgewerkt <br>';
         header("Location: verkooporderRead.php");
     }
 }
+
 
 ?>
