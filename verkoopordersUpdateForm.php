@@ -13,6 +13,7 @@
     require 'nav.php';
     ?>
 
+
     <div class="content">
         <div class="accountPage">
             <div class="basCard">
@@ -20,18 +21,45 @@
                     <h1>Update verkooporder:</h1>
                     <div class="accountForm">
                         <?php
-                            require 'Verkooporders.php';
-                            $verkOrdId = $_GET['verkOrdId'];
-                            $verkOrd1 = new Verkooporders();
-                            $verkOrd = $verkOrd1->findVerkooporder($verkOrdId);
-                            // var_dump($inkOrdId);
+                        require 'Verkooporders.php';
+                        require 'Artikel.php';
+
+                        require 'Klant.php';
+                        
+                        $verkOrdId = $_GET['verkOrdId'];
+                        $verkOrd1 = new Verkooporders();
+                        $verkOrd = $verkOrd1->findVerkooporder($verkOrdId);
+                        
+                        $klanten = new Klant();
+                        $klantenList = $klanten->getKlanten();
+                        $artikelen = new Artikel();
+                        $artikelList = $artikelen->getArtikelen();
+                            
                         ?>
                         <form method="POST" action="verkoopordersUpdate.php">
                             <input type="hidden" name="verkOrdId" value="<?php echo $verkOrd['verkOrdId']; ?>">
+                            <!-- <label>Klant ID:</label>
+                            <input type="number" name="klantId" value="<?php echo $verkOrd['klantId']; ?>"><br> -->
                             <label>Klant ID:</label>
-                            <input type="number" name="klantId" value="<?php echo $verkOrd['klantId']; ?>"><br>
+                            <select name="klantId">
+                                <?php foreach ($klantenList as $klant) { ?>
+                                    <option value="<?php echo $klant['klantId']; ?>" <?php if ($verkOrd['klantId'] == $klant['klantId']) { echo 'selected'; } ?>>
+                                        <?php echo $klant['klantId'] . ' - ' . $klant['klantNaam']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <br>
                             <label>Artikel ID:</label>
-                            <input type="number" name="artId" value="<?php echo $verkOrd['artId']; ?>"><br>
+                            <select name="artId">
+                                <?php foreach ($artikelList as $Artikel) { ?>
+                                    <option value="<?php echo $Artikel['artId']; ?>" <?php if ($verkOrd['artId'] == $Artikel['artId']) { echo 'selected'; } ?>>
+                                        <?php echo $Artikel['artId'] . ' - ' . $Artikel['artOmschrijving']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <br>
+                            <!-- <label>Artikel ID:</label>
+                            <input type="number" name="artId" value="<?php echo $verkOrd['artId']; ?>"><br> -->
                             <label>Besteldatum:</label>
                             <input type="date" name="verkOrdDatum" value="<?php echo $verkOrd['verkOrdDatum']; ?>"><br>
                             <label>Aantal:</label>

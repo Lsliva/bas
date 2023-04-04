@@ -10,6 +10,12 @@
 </head>
 <body>
 <?php require 'nav.php'?>
+<?php
+    require_once 'Klant.php';
+    $klanten = new Klant();
+    require_once 'Artikel.php';
+    $artikelen = new Artikel();
+?>
 <div class="content">
     <div class="accountPage">
         <div class="basCard">
@@ -17,11 +23,26 @@
                 <h1>Registreer nieuwe Verkooporder:</h1>
                 <div class="accountForm">
                     <form method="post" id="register" action="verkoopCreate.php" class="form">
-                        <label for="klantId">klantId:</label>
-                        <input type="int" id="name" name="klantId" required>
-                        <p id="nameMessage"></p>
-                        <label for="artId">artId:</label>
-                        <input type="int" id="artId" name="artId" required>
+                        <label for="klantId">Klant ID:</label>
+                        <select id="klantId" name="klantId">
+                        <?php
+                          $klanten = $klanten->getKlanten();
+                          foreach ($klanten as $klant) {
+                            echo '<option value="' . $klant['klantId'] . '">' . $klant['klantId'] . ' - ' . $klant['klantNaam'] . '</option>';
+                        }
+                        ?>
+                        </select>
+                        <br>
+                        <label for="artId">Artikel ID:</label>
+                        <select id="artId" name="artId">
+                            <?php
+                                 $artikelen = $artikelen->getArtikelen();
+                                 foreach ($artikelen as $artikel) {
+                                     echo '<option value="' . $artikel['artId'] . '">' . $artikel['artId'] . ' - ' . $artikel['artOmschrijving'] . '</option>';
+                                 }
+                            ?>
+                        </select>
+
                         <br>
                         <label for="verkOrdDatum">verkoop order Datum:</label>
                         <input type="DATE" id="verkOrdDatum" name="verkOrdDatum" required>
@@ -47,6 +68,11 @@
 <?php require 'footer.php'?>
 </body>
 <style>
+
+    select {
+        width: 100px;
+        margin-left: 80px;
+    }
 
     input {
         margin-bottom: 5px;

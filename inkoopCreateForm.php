@@ -10,6 +10,12 @@
 </head>
 <body>
     <?php require 'nav.php'?>
+    <?php
+    require_once 'Leveranciers.php';
+    $leveranciers = new Leveranciers();
+    require_once 'Artikel.php';
+    $artikelen = new Artikel();
+?>
     <div class="content">
         <div class="accountPage">
             <div class="basCard">
@@ -17,13 +23,35 @@
                     <h1>Create new inkooporder:</h1>
                     <div class="accountForm">
                         <form method="post" id="register" action="inkoopCreate.php" class="form">
-                            <label for="levId">LevID:</label>
+                            
+                            <label for="levId">Leverancier ID:</label>
+                            <select id="levId" name="levId">
+                                <?php
+                                    $leveranciers = $leveranciers->getLeveranciers();
+                                    foreach ($leveranciers as $leverancier) {
+                                        echo '<option value="' . $leverancier['levId'] . '">' . $leverancier['levId'] . ' - ' . $leverancier['levNaam'] . '</option>';
+                                    }
+                                ?>
+                                </select>
+                                <br> 
+                                <label for="artId">Artikel ID:</label>
+                                <select id="artId" name="artId">
+                                    <?php
+                                        $artikelen = $artikelen->getArtikelen();
+                                        foreach ($artikelen as $artikel) {
+                                            echo '<option value="' . $artikel['artId'] . '">' . $artikel['artId'] . ' - ' . $artikel['artOmschrijving'] . '</option>';
+                                        }
+                                    ?>
+                            </select>
+
+                            <br>
+                            <!-- <label for="levId">LevID:</label>
                             <input type="number" id="levId" name="levId" required>
                             <p id="levIdMessage"></p>
 
                             <label for="artId">ArtID:</label>
                             <input type="number" id="artId" name="artId" required>
-                            <br>
+                            <br> -->
                             <label for="inkOrdDatum">Datum:</label>
                             <input type="date" id="inkOrdDatum" name="inkOrdDatum" required>
                             <br>
@@ -38,7 +66,9 @@
                                 <option value="Verzonden">Verzonden</option>
                                 <option value="Afgeleverd">Afgeleverd</option>
                             </select> -->
-                            <button type="submit" name="create" class="btn">Create</button>
+                            <div class="submitButton">
+                                <input type="submit" name="inkoopCreate" value="Submit" class="registerClass">
+                            </div>
                     </form>
                     <div class="question">
                             <p><a href="inkoopRead.php">Inkoop Read</a> </p>
@@ -49,4 +79,11 @@
     </div>
 </div>
 </body>
+<style>
+      select {
+        width: 100px;
+        margin-left: 80px;
+    }
+
+</style>
 </html>

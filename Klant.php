@@ -130,15 +130,38 @@ class Klant {
         $_SESSION['message'] = 'Klant ' . $klantNaam . ' is verwijderd. <br>';
         header("Location: klantRead.php");
     }
-    public function findKlant($klantId) {
+    // public function findKlant($klantId) {
+    //     require 'pureConnect.php';
+    //     $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
+    //     $sql->bindParam(':klantId', $klantId);
+    //     $sql->execute();
+    
+    //     $klant = $sql->fetch();
+    //     return $klant;
+    // }
+    public function getKlanten() {
         require 'pureConnect.php';
-        $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
-        $sql->bindParam(':klantId', $klantId);
+        $sql = $conn->prepare('SELECT klantId, klantNaam FROM klanten');
+        $sql->execute();
+
+        $klanten = array();
+        while ($row = $sql->fetch()) {
+            $klanten[] = $row;
+        }
+        return $klanten;
+    }
+    public function getKlantIds() {
+        require 'pureConnect.php';
+        $sql = $conn->prepare('SELECT klantId FROM klanten');
         $sql->execute();
     
-        $klant = $sql->fetch();
-        return $klant;
+        $klantIds = array();
+        while ($row = $sql->fetch()) {
+            $klantIds[] = $row['klantId'];
+        }
+        return $klantIds;
     }
+    
     
     public function searchBezorger($klantId) {
         require 'database.php';

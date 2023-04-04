@@ -1,7 +1,7 @@
 <?php
 require 'Inkooporders.php';
 
-if (isset($_POST['create'])) {
+if (isset($_POST['inkoopCreate'])) {
 
     // Get the submitted form data
     $levId = $_POST['levId'];
@@ -13,8 +13,9 @@ if (isset($_POST['create'])) {
 
 
     // If all validation checks pass, insert the new Inkooporder into the database
-    $inkooporder = new Inkooporder();
-    $inkooporder->createInkooporder($levId, $artId, $inkOrdDatum, $inkOrdBestAantal, $inkOrdStatus);
+    $inkooporder1 = new Inkooporder();
+    $inkooporder1->createInkooporder($levId, $artId, $inkOrdDatum, $inkOrdBestAantal, $inkOrdStatus);
+
 
 }
 ?>

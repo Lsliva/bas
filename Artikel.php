@@ -176,6 +176,17 @@ public function findArt($artId) {
     $artikel = $sql->fetch();
     return $artikel;
 }
+public function getArtikelen() {
+    require 'pureConnect.php';
+    $sql = $conn->prepare('SELECT artId, artOmschrijving FROM artikelen');
+    $sql->execute();
+
+    $artikelen = array();
+    while ($row = $sql->fetch()) {
+        $artikelen[] = $row;
+    }
+    return $artikelen;
+}
 
 public function searchArt($artId) {
     require 'database.php';

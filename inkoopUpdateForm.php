@@ -19,19 +19,48 @@
                 <div class="accountItems">
                     <h1>Update inkooporder:</h1>
                     <div class="accountForm">
-                        <?php
-                            require 'Inkooporders.php';
-                            $inkOrdId = $_GET['inkOrdId'];
-                            $inkOrd1 = new Inkooporder();
-                            $inkOrd = $inkOrd1->findInkooporder($inkOrdId);
-                            // var_dump($inkOrdId);
+                    <?php
+                        require 'Artikel.php';
+
+                        require 'Leveranciers.php';
+                        
+                        require 'Inkooporders.php';
+                        $inkOrdId = $_GET['inkOrdId'];
+                        $inkOrd1 = new Inkooporder();
+                        $inkOrd = $inkOrd1->findInkooporder($inkOrdId);
+                        
+                        $leverancier = new Leveranciers();
+                        $levList = $leverancier->getLeveranciers();
+                        $artikelen = new Artikel();
+                        $artikelList = $artikelen->getArtikelen();
+                            
                         ?>
                         <form method="POST" action="inkoopUpdate.php">
                             <input type="hidden" name="inkOrdId" value="<?php echo $inkOrd['inkOrdId']; ?>">
                             <label>Leverancier ID:</label>
+                            <select name="levId">
+                                <?php foreach ($levList as $leverancier) { ?>
+                                    <option value="<?php echo $leverancier['levId']; ?>" <?php if ($inkOrd['levId'] == $leverancier['levId']) { echo 'selected'; } ?>>
+                                        <?php echo $leverancier['levId'] . ' - ' . $leverancier['levNaam']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <br>
+                            <label>Artikel ID:</label>
+                            <select name="artId">
+                                <?php foreach ($artikelList as $Artikel) { ?>
+                                    <option value="<?php echo $Artikel['artId']; ?>" <?php if ($inkOrd['artId'] == $Artikel['artId']) { echo 'selected'; } ?>>
+                                        <?php echo $Artikel['artId'] . ' - ' . $Artikel['artOmschrijving']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            
+                            <br>
+                            
+                            <!-- <label>Leverancier ID:</label>
                             <input type="number" name="levId" value="<?php echo $inkOrd['levId']; ?>"><br>
                             <label>Artikel ID:</label>
-                            <input type="number" name="artId" value="<?php echo $inkOrd['artId']; ?>"><br>
+                            <input type="number" name="artId" value="<?php echo $inkOrd['artId']; ?>"><br> -->
                             <label>Besteldatum:</label>
                             <input type="date" name="inkOrdDatum" value="<?php echo $inkOrd['inkOrdDatum']; ?>"><br>
                             <label>Aantal:</label>

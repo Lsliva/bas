@@ -178,6 +178,18 @@ class Leveranciers
         $leverancier = $sql->fetch();
         return $leverancier;
     }
+    public function getLeveranciers() {
+        require 'pureConnect.php';
+
+        $sql = $conn->prepare("SELECT levId, levNaam FROM leveranciers");
+        $sql->execute();
+        $leveranciers = array();
+        while ($row = $sql->fetch()) {
+            $leveranciers[] = $row;
+        }
+        return $leveranciers;
+    }
+
     public function searchLeverancier($levId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM leveranciers WHERE levId = :levId');
