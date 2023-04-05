@@ -15,10 +15,17 @@
             <div class="basCard">
                 <div class="CardContent">
                     <h1>Read Artikel</h1>
-                    <p>Dit zijn alle artikel gegevens uit de database:</p>
+                    <p>Zoek op artikel ID of omschrijving:</p>
                    
                     <form action="artikelSearch.php" method='POST'>
                         <label for="artId">artId:</label>
+                        <input type="text" id ='artId' name='artId'>
+                        <input type="submit">
+
+                    </form>
+
+                    <form action="artikelSearchOmschrijving.php" method='POST'>
+                        <label for="artId">artikel omschrijving:</label>
                         <input type="text" id ='artId' name='artId'>
                         <input type="submit">
 
@@ -41,7 +48,9 @@
                             echo "No result found";
                         }
                     ?>
-                     <div class="read">
+                     <div class="divRead">
+                     <p>Dit zijn alle artikel gegevens uit de database:</p>
+
                         <?php 
                             require 'Artikel.php';
                             $artikel1 = new Artikel();

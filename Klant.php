@@ -130,15 +130,15 @@ class Klant {
         $_SESSION['message'] = 'Klant ' . $klantNaam . ' is verwijderd. <br>';
         header("Location: klantRead.php");
     }
-    // public function findKlant($klantId) {
-    //     require 'pureConnect.php';
-    //     $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
-    //     $sql->bindParam(':klantId', $klantId);
-    //     $sql->execute();
+    public function findKlant($klantId) {
+        require 'pureConnect.php';
+        $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
+        $sql->bindParam(':klantId', $klantId);
+        $sql->execute();
     
-    //     $klant = $sql->fetch();
-    //     return $klant;
-    // }
+        $klant = $sql->fetch();
+        return $klant;
+    }
     public function getKlanten() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT klantId, klantNaam FROM klanten');
@@ -150,25 +150,28 @@ class Klant {
         }
         return $klanten;
     }
-    public function getKlantIds() {
-        require 'pureConnect.php';
-        $sql = $conn->prepare('SELECT klantId FROM klanten');
-        $sql->execute();
+    // public function getKlantIds() {
+    //     require 'pureConnect.php';
+    //     $sql = $conn->prepare('SELECT klantId FROM klanten');
+    //     $sql->execute();
     
-        $klantIds = array();
-        while ($row = $sql->fetch()) {
-            $klantIds[] = $row['klantId'];
-        }
-        return $klantIds;
-    }
+    //     $klantIds = array();
+    //     while ($row = $sql->fetch()) {
+    //         $klantIds[] = $row['klantId'];
+    //     }
+    //     return $klantIds;
+    // }
     
     
     public function searchBezorger($klantId) {
         require 'database.php';
-        $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
+        $sql = $conn->prepare('SELECT klanten.klantId, klantNaam, klantEmail, klantAdres, klantPostcode, klantWoonplaats, verkOrdId, verkOrdStatus, verkOrdDatum, artId
+        FROM klanten
+        JOIN verkooporders ON klanten.klantId = verkooporders.klantId
+        WHERE klanten.klantId = :klantId');
         $sql->bindParam(':klantId', $klantId);
         $sql->execute();
-    
+
         $klant = $sql->fetch();
         if ($klant) {
             $result = array();
@@ -178,17 +181,26 @@ class Klant {
             $result['klantAdres'] = $klant['klantAdres'];
             $result['klantPostcode'] = $klant['klantPostcode'];
             $result['klantWoonplaats'] = $klant['klantWoonplaats'];
-            $_SESSION['result'] = $result;
-            header("Location: menuBezorger.php");
-            exit;
+            $result['verkOrdId'] = $klant['verkOrdId'];
+            $result['verkOrdStatus'] = $klant['verkOrdStatus'];
+            $result['verkOrdDatum'] = $klant['verkOrdDatum'];
+            $result['artId'] = $klant['artId'];
 
+            header("Location: menuBezorger.php");
+
+            $_SESSION['result'] = $result;
+            // Pass the klantId value to bezorgsearch2.php as a GET parameter
+            // header("Location: bezorgsearch2.php?klantId=$klantId");
+            exit;
+    
         } else {
             header("Location: menuBezorger.php");
-            $_SESSION['searchMsg'] = "No result found for this Postcode.";
-
+            $_SESSION['searchMsg'] = "No result found for this Klant.";
+    
         }
-
+    
     }
+    
     public function searchKlant($klantPostcode) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM klanten WHERE klantPostcode = :klantPostcode');
@@ -234,7 +246,7 @@ class Klant {
 
         } else {
             header("Location: klantRead.php");
-            $_SESSION['searchMsg'] = "No result found for this Postcode.";
+            $_SESSION['searchMsg'] = "No result found for this klantId.";
 
         }
 

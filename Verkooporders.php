@@ -117,6 +117,18 @@ class Verkooporders {
         $order = $sql->fetch();
         return $order;
     }
+ 
+    public function updateBezorger($klantId) {
+        require 'database.php';
+        $sql = $conn->prepare('UPDATE verkooporders SET verkOrdStatus = true WHERE klantId = :klantId');
+        $sql->bindParam(':klantId', $klantId);
+    
+        $sql->execute();
+    
+        $_SESSION['searchMsg'] = 'Verkooporder is bijgewerkt <br>';
+        header("Location: menuBezorger.php");
+    }    
+
     public function searchVerkooporder($verkOrdId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM verkooporders WHERE klantPostcode = :klantPostcode');

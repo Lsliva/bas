@@ -1,6 +1,9 @@
 /* Lukas 08/02/2023 */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap%27');
 body {
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
+
 }
 button:hover {
     background-color: red;
@@ -54,6 +57,12 @@ button:hover {
     border-top-style: double;
     margin: 10px;
 }
+.searchResults {
+    padding: 10px;
+    margin: 10px;
+    border-style: dashed;
+}
+
 /* loginForm */
 .accountPage {
     display: flex;
@@ -203,20 +212,14 @@ a:hover {
 
 /* Footer */
 footer {
+    background-color: gray;
     border-radius: 10px;
-    margin: 0px;
-    padding: 0px;
+    padding: 0;
     margin-left: 5%;
-    /* margin-top: 100px; */
     border: solid;
     width: 90%;
     height: 200px;
-    background-color: grey;
-    /* position: fixed; */
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin-bottom: 0px;
+
 }
 .bxs-phone {
     font-size: larger;

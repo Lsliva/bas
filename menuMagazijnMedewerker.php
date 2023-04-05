@@ -16,6 +16,8 @@
                 <div class="accountItems">
                     <h1>magazijnmedewerker Menu</h1>
                     <p>Welkom <?php echo $_SESSION['username']; ?></p>
+                    <p>U bent nu ingelogd, in de navigatiebalk bovenin kunt u verder.</p>
+
                     <div class="accountForm">
                     </div>
                 </div>

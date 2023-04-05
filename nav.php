@@ -30,7 +30,7 @@
                             echo '<a href="artikelRead.php" class="navLink">Artikel</a>'; 
                             echo '<a href="levRead.php" class="navLink">Leverancier</a>'; 
                             echo '<a href="inkoopRead.php" class="navLink">Inkooporders</a>'; 
-                            echo '<a href="verkoopRead.php" class="navLink">Verkooporders</a>'; 
+                            echo '<a href="verkooporderRead.php" class="navLink">Verkooporders</a>'; 
                             echo '<a href="menuBezorger.php" class="navLink">Bezorger</a>'; 
                             echo '</div>';
                             echo '</div>';
@@ -41,12 +41,12 @@
                             echo '<a href="artikelRead.php" class="navLink">Artikel</a>'; 
                             echo '<a href="levRead.php" class="navLink">Leverancier</a>'; 
                             echo '<a href="inkoopRead.php" class="navLink">Inkooporders</a>'; 
-                            echo '<a href="verkoopRead.php" class="navLink">Verkooporders</a>'; 
+                            echo '<a href="verkooporderRead.php" class="navLink">Verkooporders</a>'; 
                             break;
                     case "magazijnMedewerker":
                         // Display navigation bar for magazijnmedewerker
                         echo '<a href="artikelSearch.php" class="navLink">Artikel</a>';
-                        echo '<a href="verkoopUpdate.php" class="navLink">Update verkooporders</a>'; 
+                        echo '<a href="verkoopordersUpdateForm.php" class="navLink">Update verkooporders</a>'; 
                         break;
                     case "magazijnMeester":
                         // Display navigation bar for magazijnMeester
@@ -61,7 +61,7 @@
                         // Display navigation bar for verkoper
                         echo '<a href="klantCreateForm.php" class="navLink">Klant</a>'; 
                         echo '<a href="artikelRead.php" class="navLink">Artikel</a>'; 
-                        echo '<a href="verkoopCreate.php" class="navLink">Verkooporders</a>'; 
+                        echo '<a href="verkooporderCreate.php" class="navLink">Verkooporders</a>'; 
 
 
                         break;

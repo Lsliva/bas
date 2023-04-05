@@ -96,17 +96,7 @@ class Artikel {
 
 
     //CRUD functies
-    public function idk() {
-        require 'database.php';
-        $artOmschrijving = $this->get_artOmschrijving();
-        $artInkoop = $this->get_artInkoop();
-        $artVerkoop = $this->get_artVerkoop();
-        $artVoorraad = $this->get_artVoorraad();
-        $artMinVoorraad = $this->get_artMinVoorraad();
-        $artMaxVoorraad = $this->get_artMaxVoorraad();
-        $artLocatie = $this->get_artLocatie();
-        $levId = $this->get_levId();
-    }
+   
    
     public function createArt($artOmschrijving, $artInkoop, $artVerkoop, $artVoorraad, $artMinVoorraad, $artMaxVoorraad, $artLocatie, $levId) {
         require 'database.php';
@@ -186,6 +176,34 @@ public function getArtikelen() {
         $artikelen[] = $row;
     }
     return $artikelen;
+}
+public function searchArtOms($artOmschrijving) {
+    require 'database.php';
+    $sql = $conn->prepare('SELECT * FROM artikelen WHERE artOmschrijving = :artOmschrijving');
+    $sql->bindParam(':artOmschrijving', $artOmschrijving);
+    $sql->execute();
+
+    $artikel = $sql->fetch();
+    if ($artikel) {
+        $result = array();
+        $result['artOmschrijving'] = $artikel['artOmschrijving'];
+        $result['artInkoop'] = $artikel['artInkoop'];
+        $result['artVerkoop'] = $artikel['artVerkoop'];
+        $result['artVoorraad'] = $artikel['artVoorraad'];
+        $result['artMinVoorraad'] = $artikel['artMinVoorraad'];
+        $result['artMaxVoorraad'] = $artikel['artMaxVoorraad'];
+        $result['artLocatie'] = $artikel['artLocatie'];
+        $result['levId'] = $artikel['levId'];
+        $_SESSION['result'] = $result;
+        header("Location: artikelRead.php");
+        exit;
+
+    } else {
+        header("Location: artikelRead.php");
+        $_SESSION['searchMsg'] = "No result found for this Artikel.";
+
+    }
+
 }
 
 public function searchArt($artId) {
