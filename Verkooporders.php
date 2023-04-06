@@ -97,7 +97,7 @@ class Verkooporders {
             echo $orderObject->artId . ' - ';
             echo $orderObject->verkOrdDatum . ' - ';
             echo $orderObject->verkOrdBestAantal . ' - ';
-            echo $orderObject->verkOrdStatus . ' - ';
+            echo ($orderObject->verkOrdStatus == 1) ? 'true' : 'false';
             echo '</div>';
             echo '<br>';
         }
@@ -129,30 +129,32 @@ class Verkooporders {
     //update bezorger function
     public function updateBezorger($klantId) {
         require 'database.php';
-        $sql = $conn->prepare('UPDATE verkooporders SET verkOrdStatus = true WHERE klantId = :klantId');
+        $sql = $conn->prepare('UPDATE verkooporders SET verkOrdStatus = 1 WHERE klantId = :klantId');
         $sql->bindParam(':klantId', $klantId);
     
         $sql->execute();
     
-        $_SESSION['searchMsg'] = 'Verkooporder is bijgewerkt <br>';
+        $_SESSION['searchMsg'] = 'Verkooporder met klant ID ' . $klantId . ' is bezorgt. <br>';
         header("Location: menuBezorger.php");
     }    
 
     // search verkooporder using Id
     public function searchVerkooporder($verkOrdId) {
         require 'database.php';
-        $sql = $conn->prepare('SELECT * FROM verkooporders WHERE klantPostcode = :klantPostcode');
-        $sql->bindParam(':klantPostcode', $klantPostcode);
+        $sql = $conn->prepare('SELECT * FROM verkooporders WHERE verkOrdId = :verkOrdId');
+        $sql->bindParam(':verkOrdId', $verkOrdId);
         $sql->execute();
 
         $verkooporder = $sql->fetch();
         if ($verkooporder) {
             $result = array();
-            $result['klantNaam'] = $verkooporder['klantNaam'];
-            $result['klantEmail'] = $verkooporder['klantEmail'];
-            $result['klantAdres'] = $verkooporder['klantAdres'];
-            $result['klantPostcode'] = $verkooporder['klantPostcode'];
-            $result['klantWoonplaats'] = $verkooporder['klantWoonplaats'];
+            $result['klantId'] = $verkooporder['klantId'];
+            $result['artId'] = $verkooporder['artId'];
+            $result['verkOrdDatum'] = $verkooporder['verkOrdDatum'];
+            $result['verkOrdBestAantal'] = $verkooporder['verkOrdBestAantal'];
+            $result['verkOrdStatus'] = $verkooporder['verkOrdStatus'];
+            $result['verkOrdStatus'] = ($verkooporder['verkOrdStatus'] == 1) ? 'true' : 'false';
+
             $_SESSION['result'] = $result;
             header("Location: verkooporderRead.php");
             exit;

@@ -35,7 +35,7 @@
                             echo ucfirst($key) . ": " . $value . "<br>";
                         }
                         //button to update verkooporder status
-                        echo '<a href="bezorgerUpdate.php?action=update&klantId=' . $id . '" class="updateButton"">Update</a>';            
+                        echo '<a href="bezorgerUpdate.php?action=update&klantId=' . $id . '" class="updateButton"">Bezorgt</a>';            
                         echo '</div>';
                         echo '<br>';
                         // unset the session variable once it's been displayed

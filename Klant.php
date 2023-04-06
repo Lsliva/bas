@@ -163,7 +163,7 @@ class Klant {
             $result['klantPostcode'] = $klant['klantPostcode'];
             $result['klantWoonplaats'] = $klant['klantWoonplaats'];
             $result['verkOrdId'] = $klant['verkOrdId'];
-            $result['verkOrdStatus'] = $klant['verkOrdStatus'];
+            $result['verkOrdStatus'] = ($klant['verkOrdStatus'] == 1) ? 'true' : 'false';
             $result['verkOrdDatum'] = $klant['verkOrdDatum'];
             $result['artId'] = $klant['artId'];
 

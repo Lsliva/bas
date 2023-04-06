@@ -16,7 +16,7 @@
                 <div class="CardContent">
                     <h1>Read Verkooporder</h1>
                     <p>Zoek verkooporder op ID:</p>
-                    <form action="verkoopordersSearchId.php" method='POST'>
+                    <form action="verkooporderSearchId.php" method='POST'>
                         <label for="verkOrdId">ID:</label>
                         <input type="text" id='verkOrdId' name='verkOrdId'>
                         <input type="submit">
@@ -30,7 +30,7 @@
                             echo "Artikel ID: " . $result['artId'] . "<br>";
                             echo "Datum: " . $result['verkOrdDatum'] . "<br>";
                             echo "Bestelde Aantal: " . $result['verkOrdBestAantal'] . "<br>";
-                            echo "Status: " . $result['verkOrdStatus'] . "<br>";
+                            echo "Order Status: " . $result['verkOrdStatus'] . "<br>";
                             echo '</div>';
                             // unset the session variable once it's been displayed
                             unset($_SESSION['result']);
