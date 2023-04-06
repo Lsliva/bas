@@ -50,14 +50,7 @@ class Inkooporder {
         $this->inkOrdStatus = $inkOrdStatus;
     }
 
-    // Printg function
-    public function printInkooporderDetails() {
-        echo $this->getLevId() . '</br>';
-        echo $this->getArtId() . '</br>';
-        echo $this->getInkOrdDatum() . '</br>';
-        echo $this->getInkOrdBestAantal() . '</br>';
-        echo $this->getInkOrdStatus() . '</br>';
-    }
+    //Create inkooporders
     public function createInkooporder($levId, $artId, $inkOrdDatum, $inkOrdBestAantal, $inkOrdStatus) {
         require 'database.php';
         
@@ -75,6 +68,7 @@ class Inkooporder {
         header("Location: inkoopRead.php");
     }
     
+    //read inkooporder and give a update and delete button with verkooporder ID
     public function readInkooporder() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM inkooporders');
@@ -96,6 +90,7 @@ class Inkooporder {
         }
     }
     
+    //delete inkooporders using inkooporder ID
     public function deleteInkooporder($inkOrdId) {
         require 'database.php';
         $sql = $conn->prepare('DELETE FROM inkooporders WHERE inkOrdId = :inkOrdId');
@@ -106,6 +101,7 @@ class Inkooporder {
         header("Location: inkoopRead.php");
     }
     
+    //find inkooporder using inkooporder Id for the update form
     public function findInkooporder($inkOrdId) {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM inkooporders WHERE inkOrdId = :inkOrdId');
@@ -115,6 +111,8 @@ class Inkooporder {
         $inkOrd = $sql->fetch();
         return $inkOrd;
     }
+    
+    //search inkooporder using inkooporder ID
     public function searchInkooporder($inkOrdId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM inkooporders WHERE inkOrdId = :inkOrdId');
@@ -136,6 +134,8 @@ class Inkooporder {
             $_SESSION['searchMsg'] = "No result found for this ID";
         }
     }
+
+    //Update inkooporder using the inkooporder ID
     public function updateInkooporder($inkOrdId, $levId, $artId, $inkOrdDatum, $inkOrdBestAantal, $inkOrdStatus) {
         require 'pureConnect.php';
         $sql = $conn->prepare('UPDATE inkooporders SET artId = :artId, levId = :levId, 

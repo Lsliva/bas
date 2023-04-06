@@ -53,6 +53,8 @@ class Verkooporders {
 
 
     //CRUD functions
+
+    //create verkooporder
     public function createVerkooporders() {
         require 'database.php';
         $klantId = $this->get_klantId();
@@ -77,6 +79,8 @@ class Verkooporders {
         $_SESSION['message'] = "Verkooporder " . $verkOrdId . " is toegevoegd! <br>";
         header("Location: verkooporderRead.php");
     }
+
+    //read verkooporder and give delete/update buttons with the Id 
     public function readVerkooporders() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM verkooporders');
@@ -98,6 +102,8 @@ class Verkooporders {
             echo '<br>';
         }
     }
+
+    //delte verkooporder using ID
     public function deleteVerkooporder($verkOrdId) {
         require 'database.php';
         $sql = $conn->prepare('DELETE FROM verkooporders WHERE verkOrdId = :verkOrdId');
@@ -108,6 +114,8 @@ class Verkooporders {
         $_SESSION['message'] = 'Order ' . $verkOrdId . ' is verwijderd. <br>';
         header("Location: verkooporderRead.php");
     }
+
+    //find verkooporder using Id for the update form
     public function findVerkooporder($verkOrdId) {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM verkooporders WHERE verkOrdId = :verkOrdId');
@@ -118,6 +126,7 @@ class Verkooporders {
         return $order;
     }
  
+    //update bezorger function
     public function updateBezorger($klantId) {
         require 'database.php';
         $sql = $conn->prepare('UPDATE verkooporders SET verkOrdStatus = true WHERE klantId = :klantId');
@@ -129,6 +138,7 @@ class Verkooporders {
         header("Location: menuBezorger.php");
     }    
 
+    // search verkooporder using Id
     public function searchVerkooporder($verkOrdId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM verkooporders WHERE klantPostcode = :klantPostcode');
@@ -154,6 +164,7 @@ class Verkooporders {
         }
     }
 
+    //update verkooporder using verkooporder Id
     public function updateVerkooporder($verkOrdId, $klantId, $artId, $verkOrdDatum, $verkOrdBestAantal, $verkOrdStatus) {
         require 'database.php';
         $sql = $conn->prepare('UPDATE verkooporders SET klantId = :klantId, artId = :artId, verkOrdDatum = :verkOrdDatum, verkOrdBestAantal = :verkOrdBestAantal, verkOrdStatus = :verkOrdStatus WHERE verkOrdId = :verkOrdId');

@@ -73,31 +73,9 @@ class Artikel {
         return $this->levId;
     }
 
-    // afdruk functies
-    public function afdrukken() {
-        echo $this->get_artOmschrijving();
-        echo '</br>';
-        echo $this->get_artInkoop();
-        echo '</br>';
-        echo $this->get_artVerkoop();
-        echo '</br>';
-        echo $this->get_artVoorraad();
-        echo '</br>';
-        echo $this->get_artMinVoorraad();
-        echo '</br>';
-        echo $this->get_artMaxVoorraad();
-        echo '</br>';
-        echo $this->get_artLocatie();
-        echo '</br>';
-        echo $this->get_levId();
-        echo '</br>';
-
-    }
-
-
     //CRUD functies
    
-   
+    // create new artikel
     public function createArt($artOmschrijving, $artInkoop, $artVerkoop, $artVoorraad, $artMinVoorraad, $artMaxVoorraad, $artLocatie, $levId) {
         require 'database.php';
         
@@ -117,7 +95,9 @@ class Artikel {
         $_SESSION['message'] = "Artikel " . $artOmschrijving . " is toegevoegd! <br>";
         header("Location: artikelRead.php");
     }
-        
+
+
+    //read artikel and give delete/update buttons with the ID    
     public function readArt() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM artikelen');
@@ -146,6 +126,7 @@ class Artikel {
     
     }
    
+    //delete artikel using artikel ID
     public function deleteArt($artId) {
     require 'database.php';
     $sql = $conn->prepare('DELETE FROM artikelen WHERE artId = :artId');
@@ -155,86 +136,92 @@ class Artikel {
     //melding
     $_SESSION['message'] = 'Artikel ' . $artId . ' is verwijderd. <br>';
     header("Location: artikelRead.php");
-}
-
-public function findArt($artId) {
-    require 'pureConnect.php';
-    $sql = $conn->prepare('SELECT * FROM artikelen WHERE artId = :artId');
-    $sql->bindParam(':artId', $artId);
-    $sql->execute();
-
-    $artikel = $sql->fetch();
-    return $artikel;
-}
-public function getArtikelen() {
-    require 'pureConnect.php';
-    $sql = $conn->prepare('SELECT artId, artOmschrijving FROM artikelen');
-    $sql->execute();
-
-    $artikelen = array();
-    while ($row = $sql->fetch()) {
-        $artikelen[] = $row;
-    }
-    return $artikelen;
-}
-public function searchArtOms($artOmschrijving) {
-    require 'database.php';
-    $sql = $conn->prepare('SELECT * FROM artikelen WHERE artOmschrijving = :artOmschrijving');
-    $sql->bindParam(':artOmschrijving', $artOmschrijving);
-    $sql->execute();
-
-    $artikel = $sql->fetch();
-    if ($artikel) {
-        $result = array();
-        $result['artOmschrijving'] = $artikel['artOmschrijving'];
-        $result['artInkoop'] = $artikel['artInkoop'];
-        $result['artVerkoop'] = $artikel['artVerkoop'];
-        $result['artVoorraad'] = $artikel['artVoorraad'];
-        $result['artMinVoorraad'] = $artikel['artMinVoorraad'];
-        $result['artMaxVoorraad'] = $artikel['artMaxVoorraad'];
-        $result['artLocatie'] = $artikel['artLocatie'];
-        $result['levId'] = $artikel['levId'];
-        $_SESSION['result'] = $result;
-        header("Location: artikelRead.php");
-        exit;
-
-    } else {
-        header("Location: artikelRead.php");
-        $_SESSION['searchMsg'] = "No result found for this Artikel.";
-
     }
 
-}
+    //find artikel using artikel Id for the update form
+    public function findArt($artId) {
+        require 'pureConnect.php';
+        $sql = $conn->prepare('SELECT * FROM artikelen WHERE artId = :artId');
+        $sql->bindParam(':artId', $artId);
+        $sql->execute();
 
-public function searchArt($artId) {
-    require 'database.php';
-    $sql = $conn->prepare('SELECT * FROM artikelen WHERE artId = :artId');
-    $sql->bindParam(':artId', $artId);
-    $sql->execute();
+        $artikel = $sql->fetch();
+        return $artikel;
+    }
 
-    $artikel = $sql->fetch();
-    if ($artikel) {
-        $result = array();
-        $result['artOmschrijving'] = $artikel['artOmschrijving'];
-        $result['artInkoop'] = $artikel['artInkoop'];
-        $result['artVerkoop'] = $artikel['artVerkoop'];
-        $result['artVoorraad'] = $artikel['artVoorraad'];
-        $result['artMinVoorraad'] = $artikel['artMinVoorraad'];
-        $result['artMaxVoorraad'] = $artikel['artMaxVoorraad'];
-        $result['artLocatie'] = $artikel['artLocatie'];
-        $result['levId'] = $artikel['levId'];
-        $_SESSION['result'] = $result;
-        header("Location: artikelRead.php");
-        exit;
+    //get the artikel omschrijving and ID for the option values in inkoop and verkoop order create/update
+    public function getArtikelen() {
+        require 'pureConnect.php';
+        $sql = $conn->prepare('SELECT artId, artOmschrijving FROM artikelen');
+        $sql->execute();
 
-    } else {
-        header("Location: artikelRead.php");
+        $artikelen = array();
+        while ($row = $sql->fetch()) {
+            $artikelen[] = $row;
+        }
+        return $artikelen;
+    }
+
+    //search artikel using artikel omschrijving
+    public function searchArtOms($artOmschrijving) {
+        require 'database.php';
+        $sql = $conn->prepare('SELECT * FROM artikelen WHERE artOmschrijving = :artOmschrijving');
+        $sql->bindParam(':artOmschrijving', $artOmschrijving);
+        $sql->execute();
+
+        $artikel = $sql->fetch();
+        if ($artikel) {
+            $result = array();
+            $result['artOmschrijving'] = $artikel['artOmschrijving'];
+            $result['artInkoop'] = $artikel['artInkoop'];
+            $result['artVerkoop'] = $artikel['artVerkoop'];
+            $result['artVoorraad'] = $artikel['artVoorraad'];
+            $result['artMinVoorraad'] = $artikel['artMinVoorraad'];
+            $result['artMaxVoorraad'] = $artikel['artMaxVoorraad'];
+            $result['artLocatie'] = $artikel['artLocatie'];
+            $result['levId'] = $artikel['levId'];
+            $_SESSION['result'] = $result;
+            header("Location: artikelRead.php");
+            exit;
+
+        } else {
+            header("Location: artikelRead.php");
+            $_SESSION['searchMsg'] = "No result found for this Artikel.";
+
+        }
 
     }
 
-}
+    //search artikel using artikel ID
+    public function searchArt($artId) {
+        require 'database.php';
+        $sql = $conn->prepare('SELECT * FROM artikelen WHERE artId = :artId');
+        $sql->bindParam(':artId', $artId);
+        $sql->execute();
 
+        $artikel = $sql->fetch();
+        if ($artikel) {
+            $result = array();
+            $result['artOmschrijving'] = $artikel['artOmschrijving'];
+            $result['artInkoop'] = $artikel['artInkoop'];
+            $result['artVerkoop'] = $artikel['artVerkoop'];
+            $result['artVoorraad'] = $artikel['artVoorraad'];
+            $result['artMinVoorraad'] = $artikel['artMinVoorraad'];
+            $result['artMaxVoorraad'] = $artikel['artMaxVoorraad'];
+            $result['artLocatie'] = $artikel['artLocatie'];
+            $result['levId'] = $artikel['levId'];
+            $_SESSION['result'] = $result;
+            header("Location: artikelRead.php");
+            exit;
 
+        } else {
+            header("Location: artikelRead.php");
+
+        }
+
+    }
+
+    //Update artikel using the artikel ID
     public function updateArt($artId, $artOmschrijving, $artInkoop, $artVerkoop, $artVoorraad, $artMinVoorraad, $artMaxVoorraad, $artLocatie, $levId) {
         require 'database.php';
         $sql = $conn->prepare('UPDATE artikelen SET artOmschrijving = :artOmschrijving, artInkoop = :artInkoop, artVerkoop = :artVerkoop, artVoorraad = :artVoorraad, artMinVoorraad = :artMinVoorraad, artMaxVoorraad = :artMaxVoorraad, artLocatie = :artLocatie, levId = :levId WHERE artId = :artId');

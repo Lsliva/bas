@@ -84,26 +84,10 @@ class Leveranciers
         return $this->levWoonplaats;
     }
 
-    // afdruk functies
-    public function afdrukken()
-    {
-        echo $this->get_levNaam();
-        echo '</br>';
-        echo $this->get_levContact();
-        echo '</br>';
-        echo $this->get_levEmail();
-        echo '</br>';
-        echo $this->get_levAdres();
-        echo '</br>';
-        echo $this->get_levPostcode();
-        echo '</br>';
-        echo $this->get_levWoonplaats();
-        echo '</br>';
-
-    }
-
-
+  
 //CRUD functies
+
+    //create leveranciers
     public function createLeverancier()
     {
         require 'database.php';
@@ -132,7 +116,7 @@ class Leveranciers
         header("Location: levRead.php");
     }
 
-
+    //read leveranciers and give delete/update buttons with the ID    
     public function readLeveranciers() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM Leveranciers');
@@ -158,6 +142,7 @@ class Leveranciers
 
     }
 
+    //delete leveranciers using leveranciers ID
     public function deleteLeverancier($levId) {
         require 'database.php';
         $sql = $conn->prepare('DELETE FROM leveranciers WHERE levId = :levId');
@@ -169,6 +154,7 @@ class Leveranciers
         header("Location: levRead.php");
     }
     
+    //find leverancier using leverancier Id for the update form
     public function findLeverancier($levId) {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM leveranciers WHERE levId = :levId');
@@ -178,6 +164,8 @@ class Leveranciers
         $leverancier = $sql->fetch();
         return $leverancier;
     }
+
+    //get the leverancier name and ID for the option values in verkoop order create/update
     public function getLeveranciers() {
         require 'pureConnect.php';
 
@@ -190,6 +178,7 @@ class Leveranciers
         return $leveranciers;
     }
 
+    //search leverancier using leverancier ID
     public function searchLeverancier($levId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM leveranciers WHERE levId = :levId');
@@ -216,6 +205,8 @@ class Leveranciers
         }
     
     }
+
+    //search leverancier using leverancier naam
     public function searchLeverancierNaam($levNaam) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM leveranciers WHERE levNaam = :levNaam');
@@ -242,9 +233,12 @@ class Leveranciers
         }
     
     }
-    public function updateLeverancier($levNaam, $levContact, $levEmail, $levAdres, $levPostcode, $levWoonplaats) {
+
+    //Update leverancier using the leverancier ID
+    public function updateLeverancier($levId, $levNaam, $levContact, $levEmail, $levAdres, $levPostcode, $levWoonplaats) {
         require 'database.php';
-        $sql = $conn->prepare('UPDATE leveranciers SET levNaam = :levNaam, levContact = :levContact, levEmail = :levEmail, levAdres = :levAdres, levPostcode = :levPostcode, levWoonplaats = :levWoonplaats WHERE levNaam = :levNaam');
+        $sql = $conn->prepare('UPDATE leveranciers SET levNaam = :levNaam, levContact = :levContact, levEmail = :levEmail, levAdres = :levAdres, levPostcode = :levPostcode, levWoonplaats = :levWoonplaats WHERE levId = :levId');
+        $sql->bindParam(':levId', $levId);
         $sql->bindParam(':levNaam', $levNaam);
         $sql->bindParam(':levContact', $levContact);
         $sql->bindParam(':levEmail', $levEmail);

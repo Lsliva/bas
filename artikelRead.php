@@ -31,7 +31,6 @@
 
                     </form>
                     <?php
-                        // require 'database.php';
                         if (isset($_SESSION['result'])) {
                             $result = $_SESSION['result'];
                             echo "artOmschrijving: " . $result['artOmschrijving'] . "<br>";
@@ -104,8 +103,6 @@ a:hover {
 .CardContent {
     padding: 10px;
     margin: 10px;
-    /* overflow: hidden; */
-    /* overflow-x: scroll; */
 }
 
 </style>

@@ -52,24 +52,10 @@ class Klant {
     function get_klantWoonplaats() {
         return $this->klantWoonplaats;
     }
-
-    // afdruk functies
-    public function afdrukken() {
-        echo $this->get_klantNaam();
-        echo '</br>';
-        echo $this->get_klantEmail();
-        echo '</br>';
-        echo $this->get_klantAdres();
-        echo '</br>';
-        echo $this->get_klantPostcode();
-        echo '</br>';
-        echo $this->get_klantWoonplaats();
-        echo '</br>';
-
-    }
-    
     
     //CRUD functies
+
+    //create new klant
     public function createKlant() {
         require 'database.php';
         $klantNaam = $this->get_klantNaam();
@@ -95,7 +81,8 @@ class Klant {
         header("Location: klantRead.php");
         
     }
-    
+
+    //read klant and give delete/update buttons with the ID    
     public function readKlant() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM klanten');
@@ -119,7 +106,8 @@ class Klant {
         }
   
     }
-    
+
+    //delete klant using klant ID
     public function deleteKlant($klantId) {
         require 'database.php';
         $sql = $conn->prepare('DELETE FROM klanten WHERE klantId = :klantId');
@@ -130,6 +118,8 @@ class Klant {
         $_SESSION['message'] = 'Klant ' . $klantNaam . ' is verwijderd. <br>';
         header("Location: klantRead.php");
     }
+
+    //find klant using klant Id for the update form
     public function findKlant($klantId) {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
@@ -139,6 +129,8 @@ class Klant {
         $klant = $sql->fetch();
         return $klant;
     }
+
+    //get the klant naam and ID for the option values for the verkoop order create/update
     public function getKlanten() {
         require 'pureConnect.php';
         $sql = $conn->prepare('SELECT klantId, klantNaam FROM klanten');
@@ -150,19 +142,8 @@ class Klant {
         }
         return $klanten;
     }
-    // public function getKlantIds() {
-    //     require 'pureConnect.php';
-    //     $sql = $conn->prepare('SELECT klantId FROM klanten');
-    //     $sql->execute();
-    
-    //     $klantIds = array();
-    //     while ($row = $sql->fetch()) {
-    //         $klantIds[] = $row['klantId'];
-    //     }
-    //     return $klantIds;
-    // }
-    
-    
+
+    //search klant using klant ID
     public function searchBezorger($klantId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT klanten.klantId, klantNaam, klantEmail, klantAdres, klantPostcode, klantWoonplaats, verkOrdId, verkOrdStatus, verkOrdDatum, artId
@@ -186,21 +167,20 @@ class Klant {
             $result['verkOrdDatum'] = $klant['verkOrdDatum'];
             $result['artId'] = $klant['artId'];
 
+            //redirect to the menu and pass the result array
             header("Location: menuBezorger.php");
-
             $_SESSION['result'] = $result;
-            // Pass the klantId value to bezorgsearch2.php as a GET parameter
-            // header("Location: bezorgsearch2.php?klantId=$klantId");
             exit;
-    
         } else {
+            //redirect to the menu and give the error message
             header("Location: menuBezorger.php");
             $_SESSION['searchMsg'] = "No result found for this Klant.";
     
         }
     
     }
-    
+
+    //search klant using klant postcode
     public function searchKlant($klantPostcode) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM klanten WHERE klantPostcode = :klantPostcode');
@@ -226,6 +206,9 @@ class Klant {
         }
 
     }
+
+    //search klant using klant ID
+
     public function searchKlantId($klantId) {
         require 'database.php';
         $sql = $conn->prepare('SELECT * FROM klanten WHERE klantId = :klantId');
@@ -252,6 +235,7 @@ class Klant {
 
     }
 
+    //Update klant using the klant ID
     public function updateKlant($klantId, $klantNaam, $klantEmail, $klantAdres, $klantPostcode, $klantWoonplaats) {
         require 'database.php';
         $sql = $conn->prepare('UPDATE klanten SET klantNaam = :klantNaam, klantEmail = :klantEmail, klantAdres = :klantAdres, klantPostcode = :klantPostcode, klantWoonplaats = :klantWoonplaats WHERE klantId = :klantId');

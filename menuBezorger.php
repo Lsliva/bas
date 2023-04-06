@@ -25,46 +25,16 @@
 
                     </form>
                     <?php
-                    // if (isset($_SESSION['result'])) {
-                    //     $result = $_SESSION['result'];
-                    //     foreach ($result as $value) {
-                    //         echo '<div class="searchResults">';
-                    //         echo "klantId: " . $value['klantId'] . "<br>";
-                    //         echo "Klantnaam: " . $value['klantNaam'] . "<br>";
-                    //         echo "Email: " . $value['klantEmail'] . "<br>";
-                    //         echo "Adres: " . $value['klantAdres'] . "<br>";
-                    //         echo "Postcode: " . $value['klantPostcode'] . "<br>";
-                    //         echo "Woonplaats: " . $value['klantWoonplaats'] . "<br>";
-                    //         echo "verkOrdId: " . $value['verkOrdId'] . "<br>";
-                    //         echo "Verkoop order status: " . $value['verkOrdStatus'] . "<br>";
-                    //         echo "Datum: " . $value['verkOrdDatum'] . "<br>";
-                    //         echo "Artikel Id: " . $value['artId'] . "<br>";
-                    //         echo '</div>';
-                    //         echo '<br>';
-                    //     }
-                    //     // unset the session variable once it's been displayed
-                    //     unset($_SESSION['result']);
-                    
-                    // } else if (isset($_SESSION['searchMsg'])) {
-                    //     echo $_SESSION['searchMsg'];
-                    //     unset($_SESSION['searchMsg']);
-                    // }
-                    
-
-
-
+                   //print results from the search
                     if (isset($_SESSION['result'])) {
                         $result = $_SESSION['result'];
                         echo '<div class="searchResults">';
-                        // var_dump($result);
                         $id = $result['klantId'];
 
                         foreach ($result as $key => $value) {
                             echo ucfirst($key) . ": " . $value . "<br>";
                         }
-                        // $id = $_POST['klantId'];
-
-
+                        //button to update verkooporder status
                         echo '<a href="bezorgerUpdate.php?action=update&klantId=' . $id . '" class="updateButton"">Update</a>';            
                         echo '</div>';
                         echo '<br>';
@@ -73,10 +43,7 @@
                     } else if (isset($_SESSION['searchMsg'])) {
                         echo $_SESSION['searchMsg'];
                         unset($_SESSION['searchMsg']);
-                    }
-                    
-                    
-                        
+                    } 
                   
                     ?>
         </div>
