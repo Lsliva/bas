@@ -286,13 +286,23 @@ nav {
 .logo {
     /* height: 100px; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     /* height: 80px; */
-    width: 80px;
-    margin-left: -120px;
-    margin-bottom: 50px;
+    width: 200px;
+    height: 70px;
+    margin-left: -140px;
+    /* margin-bottom: 50px; */
     padding: 10px;
+}
+
+.bbb {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-weight: bold;
 }
 
 .bas {
@@ -303,6 +313,8 @@ nav {
     color: white;
     text-decoration-line: underline;
     text-decoration-thickness: 2px;
+    padding: 0;
+    margin: 0;
     /* position: inline; */
     /* margin: 10px; */
     /* rens veldink 08/02/2023 deze ene regel verplaatst naar .logo*/

@@ -5,6 +5,7 @@
 <nav>
     <div class="logo">
         <a class="bas" href="index.php">Bas</a>
+        <p class="bbb">Brengt Boodschappen</p>
         <!-- <img src="img/basLogo.png" alt="Bas Logo"> -->
     </div>
 
@@ -37,11 +38,16 @@
                             break;
                         case "afdelingsHoofd":
                             // Display navigation bar for afdelingsHoofd
+                            echo '<div class="dropdown">';
+                            echo '<button class="dropbtn">All</button>';
+                            echo '<div class="dropdown-content">';
                             echo '<a href="klantRead.php" class="navLink">Klant</a>'; 
                             echo '<a href="artikelRead.php" class="navLink">Artikel</a>'; 
                             echo '<a href="levRead.php" class="navLink">Leverancier</a>'; 
                             echo '<a href="inkoopRead.php" class="navLink">Inkooporders</a>'; 
                             echo '<a href="verkooporderRead.php" class="navLink">Verkooporders</a>'; 
+                            echo '</div>';
+                            echo '</div>';
                             break;
                     case "magazijnMedewerker":
                         // Display navigation bar for magazijnmedewerker
@@ -61,14 +67,24 @@
                         // Display navigation bar for verkoper
                         echo '<a href="klantCreateForm.php" class="navLink">Klant</a>'; 
                         echo '<a href="artikelRead.php" class="navLink">Artikel</a>'; 
-                        echo '<a href="verkooporderCreate.php" class="navLink">Verkooporders</a>'; 
+                        echo '<a href="verkoopCreateForm.php" class="navLink">Verkooporders</a>'; 
 
 
                         break;
                     case "inkoper":
                         // Display navigation bar for inkoper
-                        echo '<a href="inkoopRead.php" class="navLink">Inkopen</a>'; 
-                        echo '<a href="levRead.php" class="navLink">Leveranciers</a>'; 
+                        echo '<div class="dropdown">';
+                        echo '<button class="dropbtn">Inkooop</button>';
+                        echo '<div class="dropdown-content">';
+                        echo '<a href="inkoopCreateForm.php" class="navLink">Inkoop Create</a>'; 
+                        echo '<a href="inkoopRead.php" class="navLink">Inkoop Read</a>'; 
+                        echo '</div>';
+                        echo '</div>'; 
+                        echo '<a href="artVoorraad.php" class="navLink">Artikel Voorraad</a>'; 
+
+
+                        echo '<a href="levRead.php" class="navLink">Leveranciers</a>';
+
 
                         break;
                     default:

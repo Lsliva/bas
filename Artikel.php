@@ -216,6 +216,7 @@ class Artikel {
 
         } else {
             header("Location: artikelRead.php");
+            $_SESSION['searchMsg'] = "No result found for this Artikel ID.";
 
         }
 
@@ -240,6 +241,79 @@ class Artikel {
     
         $_SESSION['message'] = 'Artikel ' . $artOmschrijving . ' is bijgewerkt <br>';
         header("Location: artikelRead.php");
+    }
+
+    //artikel voorraad display
+    // public function artikelVoorraad() {
+    //     require 'pureConnect.php';
+    //     $sql = "SELECT * FROM artikelen WHERE artVoorraad < artMaxVoorraad";
+    //     $result = $conn->query($sql);
+
+    //     // if ($result->num_rows > 0) {
+    //     //     while($row = $result->fetch_assoc()) {
+    //     //         // Calculate the bestelhoeveelheid
+    //     //         $bestelling = $this->maxVoorraad - $this->minVoorraad;
+
+    //     //         // Update the artVoorraad in the database
+    //     //         $sql = "UPDATE artikelen SET artVoorraad = artVoorraad + $bestelling WHERE id = " . $row["id"];
+    //     //         $conn->query($sql);
+
+    //     //         echo "Bestelling geplaatst voor " . $row["artNaam"] . ": $bestelling\n";
+    //     //     }
+    //     // } else {
+    //     //     echo "Alle artikelen zijn op voorraad.\n";
+    //     // }
+    // }
+    public function searchArtVoorraad() {
+        // require 'database.php';
+        // $sql = $conn->prepare('SELECT * FROM artikelen WHERE artVoorraad < artMaxVoorraad');
+        // $sql->execute();
+
+        // $artikel = $sql->fetch();
+        // if ($artikel) {
+        //     $result = array();
+        //     $result['artOmschrijving'] = $artikel['artOmschrijving'];
+        //     $result['artInkoop'] = $artikel['artInkoop'];
+        //     $result['artVerkoop'] = $artikel['artVerkoop'];
+        //     $result['artVoorraad'] = $artikel['artVoorraad'];
+        //     $result['artMinVoorraad'] = $artikel['artMinVoorraad'];
+        //     $result['artMaxVoorraad'] = $artikel['artMaxVoorraad'];
+        //     $result['artLocatie'] = $artikel['artLocatie'];
+        //     $result['levId'] = $artikel['levId'];
+        //     $_SESSION['result'] = $result;
+        //     header("Location: artVoorraad.php");
+        //     exit;
+
+        // } else {
+        //     header("Location: artVoorraad.php");
+        //     $_SESSION['searchMsg'] = "Alle artikelen zijn op voorraad.";
+
+        // }
+        require 'pureConnect.php';
+        $sql = $conn->prepare('SELECT * FROM artikelen WHERE artVoorraad < artMaxVoorraad');
+        $sql->execute();
+    
+        foreach($sql as $artikel) {
+            $artikelObject = new Artikel($artikel['artOmschrijving'], $artikel['artInkoop'], $artikel['artVerkoop'], $artikel['artVoorraad'], $artikel['artMinVoorraad'], $artikel['artMaxVoorraad'], $artikel['artLocatie'], $artikel['levId']);
+    
+            echo '<br>';
+            echo '<div class="readList">';
+
+            echo '<a href="artikelDelete.php?action=delete&artId=' . $artikel['artId'] . '" class="deleteButton" onclick="return confirm(\'Are you sure you want to delete this artikel?\')">Delete</a>';
+            echo '<a href="artikelUpdateForm.php?action=update&artId=' . $artikel['artId'] . '"class="updateButton">Update</a>';
+            
+            echo $artikelObject->artOmschrijving . ' - ';
+            echo $artikelObject->artInkoop . ' - ';
+            echo $artikelObject->artVerkoop . ' - ';
+            echo $artikelObject->artVoorraad . ' - ';
+            echo $artikelObject->artMinVoorraad . ' - ';
+            echo $artikelObject->artMaxVoorraad . ' - ';
+            echo $artikelObject->artLocatie . ' - ';
+            echo $artikelObject->levId . ' - ';
+            echo '</div>';
+            echo '<br>';
+        }
+
     }
 }
 

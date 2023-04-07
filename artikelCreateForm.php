@@ -9,7 +9,12 @@
     <title>artikelCreateForm</title>
 </head>
 <body>
-    <?php require 'nav.php'?>
+    <?php 
+    require 'nav.php';
+    require 'Leveranciers.php';
+    $leverancier = new Leveranciers();
+    ?>
+    
     <div class="content">
         <div class="accountPage">
             <div class="basCard">
@@ -21,25 +26,32 @@
                             <input type="text" id="artOmschrijving" name="artOmschrijving" required>
                             <br>
                             <label for="artInkoop">artInkoop:</label>
-                            <input type="text" id="artInkoop" name="artInkoop" required>
+                            <input type="number" id="artInkoop" name="artInkoop" min="0" max="999.99" step="0.01" required>
                             <br>
                             <label for="artVerkoop">artVerkoop:</label>
-                            <input type="text" id="artVerkoop" name="artVerkoop" required>
+                            <input type="number" id="artVerkoop" name="artVerkoop" min="0" max="999.99" step="0.01" required>
                             <br>
                             <label for="artVoorraad">artVoorraad:</label>
-                            <input type="text" id="artVoorraad" name="artVoorraad" required>
+                            <input type="number" id="artVoorraad" name="artVoorraad" required>
                             <br>
                             <label for="artMinVoorraad">artMinVoorraad:</label>
-                            <input type="text" id="artMinVoorraad" name="artMinVoorraad" required>
+                            <input type="number" id="artMinVoorraad" name="artMinVoorraad" required>
                             <br>
                             <label for="artMaxVoorraad">artMaxVoorraad:</label>
-                            <input type="text" id="artMaxVoorraad" name="artMaxVoorraad" required>
+                            <input type="number" id="artMaxVoorraad" name="artMaxVoorraad" required>
                             <br>
                             <label for="artLocatie">artLocatie:</label>
-                            <input type="text" id="artLocatie" name="artLocatie" required>
+                            <input type="number" id="artLocatie" name="artLocatie" required>
                             <br>
-                            <label for="levId">levId:</label>
-                            <input type="text" id="levId" name="levId" required>
+                            <label for="levId">Leverancier ID:</label>
+                            <select id="levId" name="levId">
+                                <?php
+                                    $leverancier = $leverancier->getLeveranciers();
+                                    foreach ($leverancier as $lev) {
+                                        echo '<option value="' . $lev['levId'] . '">' . $lev['levId'] . ' - ' . $lev['levNaam'] . '</option>';
+                                    }
+                                ?>
+                            </select>
                             <br>
                            
                             
@@ -67,6 +79,11 @@
     <?php require 'footer.php'?>
 </body>
 <style>
+    
+    select {
+        width: 100px;
+        margin-left: 80px;
+    }
     
 input {
     margin-bottom: 5px;

@@ -43,8 +43,9 @@
                             echo "levId: " . $result['levId'] . "<br>";
                             // unset the session variable once it's been displayed
                             unset($_SESSION['result']);
-                        } else {
-                            echo "No result found";
+                        } else if (isset($_SESSION['searchMsg'])) {
+                            echo $_SESSION['searchMsg'];
+                            unset($_SESSION['searchMsg']);
                         }
                     ?>
                      <div class="divRead">
@@ -103,6 +104,7 @@ a:hover {
 .CardContent {
     padding: 10px;
     margin: 10px;
+
 }
 
 </style>
